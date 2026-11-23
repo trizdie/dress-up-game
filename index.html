@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>dress up ♡</title>
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="stylesheet" href="style.css?v=9">
+</head>
+<body>
+<div class="wrap">
+  <div class="stage">
+
+    <section class="booth">
+      <div class="booth-inner">
+        <div class="cat-backdrop" id="cat-backdrop"></div>
+        <div class="cat-area">
+          <div class="cat-stage" id="dropzone">
+            <img class="cat-base" id="cat-base" src="assets/cat_cream.png" alt="Gatinho">
+
+            <img class="acc-img acc-hat hidden" id="acc-hat" src="" alt="Chapéu">
+            <img class="acc-img acc-bow hidden" id="acc-bow" src="" alt="Laço">
+            <img class="acc-img acc-bag hidden" id="acc-bag" src="" alt="Bolsa">
+            <img class="acc-img acc-shoes hidden" id="acc-shoes" src="" alt="Sapatos">
+            <img class="acc-img acc-dress-extra hidden" id="acc-dress-extra" src="" alt="Vestido">
+            <img class="acc-img acc-blouse hidden" id="acc-blouse" src="" alt="Blusa">
+            <img class="acc-img acc-skirt hidden" id="acc-skirt" src="" alt="Saia">
+
+            <div class="cat-color-controls">
+              <button class="cat-arrow" id="cat-color-prev" type="button" aria-label="Cor anterior">
+                <img src="assets/arrow-left.png" alt="">
+              </button>
+              <span id="cat-color-label" class="sr-only"></span>
+              <button class="cat-arrow" id="cat-color-next" type="button" aria-label="Próxima cor">
+                <img src="assets/arrow-right.png" alt="">
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="booth-caption" id="caption">o que devo vestir hoje? ♡</div>
+        <div class="worn-chips" id="worn-chips"></div>
+
+        <div class="booth-actions">
+          <button class="ghost-btn solid" id="btn-random">randomizar ۶۟ৎ</button>
+          <button class="ghost-btn" id="btn-clear">limpar tudo ۶۟ৎ</button>
+          <button class="trash" id="trash" type="button" aria-label="Limpar roupas do manequim"><img class="trash-icon" src="assets/trash-icon.png" alt="" aria-hidden="true"></button>
+        </div>
+      </div>
+    </section>
+
+    <section class="wardrobe">
+      <div class="wardrobe-content">
+        <div class="wardrobe-title">
+          <span class="title-heart">🐾</span>
+          <div>
+            <h2>como interagir com o manequim?</h2>
+            <p>vista o manequim e arraste a peça até o ponto desejado no gatinho ♡</p>
+          </div>
+          <span class="title-heart">🐾</span>
+        </div>
+
+        <div class="mannequin-dressing" id="mannequin-dropzone">
+          <div class="guide-stage">
+            <div class="guide-slot guide-slot-hat" data-guide-cat="hat">
+              <img class="guide-item" src="assets/hat_violet.png" data-guide-cat="hat" alt="Chapéu — lilás com laço" draggable="true">
+              <div class="guide-controls">
+                <button class="guide-arrow guide-prev" type="button" aria-label="Última cor do chapéu"><img src="assets/arrow-left.png" alt=""></button>
+                <span class="guide-count">1/12</span>
+                <button class="guide-arrow guide-next" type="button" aria-label="Próxima cor do chapéu"><img src="assets/arrow-right.png" alt=""></button>
+              </div>
+            </div>
+
+            <div class="guide-slot guide-slot-bow" data-guide-cat="bow">
+              <img class="guide-item" src="assets/bow_pink.png" data-guide-cat="bow" alt="Laço — romântico" draggable="true">
+              <div class="guide-controls">
+                <button class="guide-arrow guide-prev" type="button" aria-label="Última cor do laço"><img src="assets/arrow-left.png" alt=""></button>
+                <span class="guide-count">1/2</span>
+                <button class="guide-arrow guide-next" type="button" aria-label="Próxima cor do laço"><img src="assets/arrow-right.png" alt=""></button>
+              </div>
+            </div>
+
+            <div class="guide-slot guide-slot-bag" data-guide-cat="bag">
+              <img class="guide-item" src="assets/bag_purple.png" data-guide-cat="bag" alt="Bolsa — doce" draggable="true">
+              <div class="guide-controls">
+                <button class="guide-arrow guide-prev" type="button" aria-label="Última cor da bolsa"><img src="assets/arrow-left.png" alt=""></button>
+                <span class="guide-count">2/3</span>
+                <button class="guide-arrow guide-next" type="button" aria-label="Próxima cor da bolsa"><img src="assets/arrow-right.png" alt=""></button>
+              </div>
+            </div>
+
+            <div class="guide-slot guide-slot-shoes" data-guide-cat="shoes">
+              <img class="guide-item" src="assets/shoes_purple.png" data-guide-cat="shoes" alt="Sapatos — doce" draggable="true">
+              <div class="guide-controls">
+                <button class="guide-arrow guide-prev" type="button" aria-label="Última cor dos sapatos"><img src="assets/arrow-left.png" alt=""></button>
+                <span class="guide-count">2/3</span>
+                <button class="guide-arrow guide-next" type="button" aria-label="Próxima cor dos sapatos"><img src="assets/arrow-right.png" alt=""></button>
+              </div>
+            </div>
+          </div>
+
+          <div class="mannequin-doll-stage">
+            <img class="mannequin-doll-base" id="mannequin-doll-img" src="assets/mannequin.png" alt="Manequim">
+
+            <img class="doll-acc doll-acc-hat hidden" id="acc-hat-mannequin" src="" alt="Chapéu" draggable="true">
+            <img class="doll-acc doll-acc-bow hidden" id="acc-bow-mannequin" src="" alt="Laço" draggable="true">
+            <img class="doll-acc doll-acc-bag hidden" id="acc-bag-mannequin" src="" alt="Bolsa" draggable="true">
+            <img class="doll-acc doll-acc-shoes hidden" id="acc-shoes-mannequin" src="" alt="Sapatos" draggable="true">
+            <img class="doll-acc doll-acc-dress-extra hidden" id="acc-dress-extra-mannequin" src="" alt="Vestido" draggable="true">
+            <img class="doll-acc doll-acc-blouse hidden" id="acc-blouse-mannequin" src="" alt="Blusa" draggable="true">
+            <img class="doll-acc doll-acc-skirt hidden" id="acc-skirt-mannequin" src="" alt="Saia" draggable="true">
+          </div>
+
+          <p class="mannequin-caption" id="mannequin-caption">arraste a peça até o ponto desejado no gatinho ♡</p>
+        </div>
+
+        <div class="tabs" id="tabs"></div>
+        <div id="panels"></div>
+      </div>
+    </section>
+  </div>
+</div>
+<script src="script.js?v=9"></script>
+</body>
+</html>

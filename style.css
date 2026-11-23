@@ -1,0 +1,439 @@
+@import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap');
+
+:root{
+  --pink:#f7b6ce; --pink-strong:#ef9fbe; --pink-soft:#f9e6ee;
+  --lav:#e8d9ea; --lav-deep:#b89bd1; --cream:#fff7f3;
+  --ink:#403443; --muted:#8d7384;
+}
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;overflow:hidden}
+body{font-family:"Pixelify Sans",sans-serif;background:#eadce8;color:var(--ink)}
+button{font:inherit}
+.wrap{width:100%;height:100%}
+.stage{display:grid;grid-template-columns:55.7% 44.3%;width:100%;height:100%;gap:0}
+
+.booth{
+  position:relative;height:100%;overflow:hidden;border-radius:20px 12px 12px 20px;
+  background:#efdbe8 url("assets/wardrobe_bg.png") center/cover no-repeat;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.7);
+}
+.booth-inner{position:relative;width:100%;height:100%}
+.cat-backdrop{
+  position:absolute;left:50%;top:2%;bottom:26%;width:74%;transform:translateX(-50%);
+  background:#fff;border:3px solid #b89bd1;border-radius:22px;
+  box-shadow:0 4px 14px rgba(190,120,150,.14);
+}
+.cat-area{position:absolute;left:50%;top:5%;transform:translateX(-50%);width:min(47%,330px);height:auto;aspect-ratio:599/755}
+.cat-stage{position:relative;width:100%;height:100%;overflow:visible}
+.cat-base{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;image-rendering:pixelated;user-select:none;pointer-events:none;z-index:10}
+.cat-head-overlay{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  image-rendering:pixelated;
+  user-select:none;
+  pointer-events:none;
+  z-index:100;
+  clip-path:inset(0 0 51% 0);
+}
+
+
+.acc-img{
+  position:absolute;image-rendering:pixelated;user-select:none;pointer-events:none;
+  transform-origin:center top;touch-action:none
+}
+.acc-img.positionable{pointer-events:auto;cursor:grab}
+.acc-img.positionable:active{cursor:grabbing}
+.acc-img.manual-position{transform:translate(-50%,-50%)!important}
+/* Tamanhos/posições das peças são calculados por script.js (encaixe por
+   conteúdo real de cada sprite — ver SPRITE_CONTENT_BOX/CAT_CONTENT_FIT).
+   Apenas os z-index base permanecem no CSS. */
+.acc-hat{z-index:120}
+.acc-bow{z-index:120}
+.acc-bag{z-index:22}
+.acc-shoes{z-index:23}
+.acc-dress{z-index:2}
+.acc-dress-extra{z-index:2}
+.acc-skirt{z-index:20}
+.acc-blouse{z-index:20}
+.hidden{display:none!important}
+
+.cat-color-controls{
+  position:absolute;left:-34%;right:-34%;top:50%;display:flex;
+  justify-content:space-between;align-items:center;z-index:30;pointer-events:none
+}
+.cat-arrow{
+  width:110px;height:110px;padding:0;border:0;background:transparent;cursor:pointer;
+  pointer-events:auto;transition:transform .15s ease;filter:drop-shadow(0 2px 2px rgba(125,83,148,.08));
+  display:flex;align-items:center;justify-content:center
+}
+.cat-arrow img{width:100%;height:100%;object-fit:contain;display:block;image-rendering:auto}
+.cat-arrow:hover{transform:scale(1.07)}
+#cat-color-next{transform:translateX(10px) scale(1.07)}
+#cat-color-next:hover{transform:translateX(10px) scale(1.145)}
+.sr-only{position:absolute;width:110px;height:110px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+.booth-caption{position:absolute;left:0;right:0;bottom:16.4%;text-align:center;color:#6c4d63;font-size:21px;letter-spacing:.2px}
+.worn-chips{
+  position:absolute;left:0;right:0;bottom:9.4%;display:flex;justify-content:center;
+  gap:8px;min-height:40px;pointer-events:auto
+}
+.chip{
+  display:flex;align-items:center;gap:8px;background:#fff;border:1px solid #f3b0ca;
+  border-radius:22px;padding:7px 10px 7px 13px;font-size:15px;color:#443644;
+  box-shadow:0 4px 12px rgba(190,120,150,.08);cursor:grab
+}
+.chip img{width:25px;height:25px;object-fit:contain;image-rendering:pixelated}
+.chip button{width:20px;height:20px;border:0;border-radius:50%;background:#eee;color:#9b8492;cursor:pointer}
+.booth-actions{
+  position:absolute;left:0;right:0;bottom:3.8%;display:flex;justify-content:center;
+  gap:24px;align-items:center
+}
+.ghost-btn{
+  height:54px;min-width:205px;padding:0 28px;border:0;border-radius:30px;
+  background:#fff;color:#3e3441;font-size:18px;cursor:pointer;
+  box-shadow:0 2px 7px rgba(150,95,125,.08)
+}
+.ghost-btn.solid{background:#f39f91;color:#fff;box-shadow:none}
+.ghost-btn:hover{transform:translateY(-1px)}
+.trash{
+  width:54px;height:54px;border-radius:50%;border:0;background:#fff;color:#a39aa3;
+  font-size:23px;cursor:pointer;box-shadow:0 2px 7px rgba(150,95,125,.08);
+  display:flex;align-items:center;justify-content:center;padding:0
+}
+.trash-icon{width:60%;height:60%;object-fit:contain;image-rendering:pixelated;pointer-events:none}
+
+.wardrobe{
+  position:relative;height:100%;overflow:hidden;border-radius:12px 20px 20px 12px;
+  background:#f5e7ef;box-shadow:inset 0 0 0 1px rgba(255,255,255,.72)
+}
+.wardrobe-content{position:relative;height:100%;padding:24px 22px 16px;overflow:hidden}
+.wardrobe-title{
+  height:68px;display:flex;align-items:flex-start;justify-content:space-between;
+  text-align:center;color:#5d4760;padding:3px 0 0
+}
+.wardrobe-title h2{margin:0;font-size:23px;font-weight:600;letter-spacing:.5px}
+.wardrobe-title p{margin:8px 0 0;font-size:14px;color:#846d7e}
+.title-heart{font-size:27px;color:#f6a4c4;margin-top:1px}
+
+.mannequin-dressing{
+  height:51%;min-height:455px;position:relative;border:1.5px solid rgba(224,198,217,.9);
+  border-radius:20px;background:rgba(255,250,252,.22);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.4);margin-bottom:14px;
+  transition:.15s
+}
+.mannequin-dressing.drop-hover{border-color:#ef9fbe;background:rgba(255,235,244,.35);box-shadow:0 0 0 6px rgba(239,159,190,.10)}
+.guide-stage{position:absolute;inset:0;overflow:visible}
+.mannequin-doll-stage{
+  position:absolute;width:110px;height:413px;left:50%;top:4%;transform:translateX(-50%);
+  overflow:visible;z-index:4
+}
+.mannequin-doll-base{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:contain;
+  image-rendering:pixelated;user-select:none;pointer-events:none
+}
+.doll-acc{
+  position:absolute;image-rendering:pixelated;user-select:none;cursor:grab;
+  touch-action:none;transform-origin:center top
+}
+.doll-acc:active{cursor:grabbing}.doll-acc.dragging{opacity:.62}
+/* Posições do manequim também vêm do encaixe por conteúdo em script.js;
+   aqui ficam apenas os z-index base. */
+.doll-acc-hat{z-index:8}
+.doll-acc-bow{z-index:7}
+.doll-acc-bag{z-index:7}
+.doll-acc-shoes{z-index:6}
+
+.mannequin-caption{
+  position:absolute;left:0;right:0;bottom:16px;text-align:center;color:#6f586b;
+  font-size:15px;margin:0;z-index:9
+}
+.guide-item{
+  position:absolute;image-rendering:pixelated;object-fit:contain;cursor:grab;z-index:7;
+  filter:drop-shadow(0 3px 2px rgba(140,91,124,.08));touch-action:none
+}
+.guide-item:hover{transform:scale(1.04)}
+.guide-hat{width:23%;left:7%;top:7%}
+.guide-bow{width:14%;right:8%;top:9%}
+.guide-bag-left{width:18%;left:7%;top:36%}
+.guide-dress{width:23%;right:6%;top:34%}
+.guide-shoes{width:22%;left:7%;bottom:12%}
+.guide-bag-right{width:18%;right:8%;bottom:12%}
+
+.tabs{
+  height:66px;display:grid;grid-template-columns:repeat(3,1fr);gap:8px;
+  margin:0 0 12px
+}
+.tab{
+  border:1px solid rgba(226,190,213,.75);background:rgba(255,248,252,.62);
+  border-radius:13px;color:#5d4a59;font-size:16px;display:flex;align-items:center;
+  justify-content:center;gap:8px;cursor:pointer;transition:.15s
+}
+.tab.active{background:#fff;border-color:#f2a6c5;box-shadow:0 3px 10px rgba(218,135,167,.12);color:#403443}
+.tab:hover{background:#fff}
+.tab-icon{
+  width:40px;height:40px;display:flex;align-items:center;justify-content:center;
+  overflow:hidden
+}
+.tab-icon img{width:38px;height:38px;object-fit:contain;image-rendering:pixelated}
+.panel{display:none}.panel.active{display:block}
+.grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:10px;
+  max-height:calc(100vh - 680px);overflow:auto;padding:0 2px 4px
+}
+.item-card{
+  height:150px;border:1.5px solid rgba(225,196,215,.8);background:rgba(255,250,253,.72);
+  border-radius:15px;padding:8px;display:flex;align-items:center;justify-content:center;
+  cursor:grab;user-select:none;transition:.15s;position:relative
+}
+.item-card:hover{border-color:#efa8c5;transform:translateY(-1px)}
+.item-card.selected{border:2px solid #f2a3c2;background:#fff}
+.item-card.dragging{opacity:.4}
+.swatch{
+  width:100%;height:100%;display:flex;align-items:center;justify-content:center;
+  background:transparent;pointer-events:none;overflow:hidden
+}
+.swatch img{max-width:94%;max-height:94%;object-fit:contain;image-rendering:pixelated}
+.item-card span.label{display:none}
+
+@media(max-width:1000px){
+  .stage{grid-template-columns:1fr}
+  html,body{overflow:auto}
+  .booth,.wardrobe{height:720px;border-radius:0}
+  .wardrobe-content{padding:20px}
+}
+
+
+
+
+/* ===== Ajuste final baseado no ZIP de referência ===== */
+.mannequin-dressing{overflow:hidden;}
+.guide-stage{
+  position:absolute;inset:0;
+  display:grid;
+  grid-template-columns:1fr 1.18fr 1fr;
+  grid-template-rows:1fr 1fr;
+  gap:0;
+  background:
+    linear-gradient(to right,
+      transparent 33.15%,rgba(255,255,255,.9) 33.28%,rgba(255,255,255,.9) 33.48%,transparent 33.61%,
+      transparent 66.39%,rgba(255,255,255,.9) 66.52%,rgba(255,255,255,.9) 66.72%,transparent 66.85%),
+    linear-gradient(to bottom,
+      transparent 49.25%,rgba(255,255,255,.9) 49.38%,rgba(255,255,255,.9) 49.58%,transparent 49.71%);
+  border-radius:18px;
+}
+.guide-slot{
+  position:relative;z-index:8;min-width:0;min-height:0;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:8px 8px 6px;
+}
+.guide-slot-hat{grid-column:1;grid-row:1;}
+.guide-slot-bow{grid-column:3;grid-row:1;}
+.guide-slot-bag{grid-column:1;grid-row:2;}
+.guide-slot-shoes{grid-column:3;grid-row:2;}
+.guide-item{
+  position:relative!important;left:auto!important;right:auto!important;top:auto!important;bottom:auto!important;
+  width:auto!important;height:auto!important;max-width:62%;max-height:70%;
+  object-fit:contain;image-rendering:pixelated;cursor:none!important;touch-action:none;
+  filter:drop-shadow(0 2px 2px rgba(140,91,124,.08));
+  transform:none!important;
+  user-select:none;
+}
+.guide-slot-hat .guide-item{max-width:55%;max-height:54%;}
+.guide-slot-bow .guide-item{max-width:48%;max-height:56%;}
+.guide-slot-bag .guide-item{max-width:49%;max-height:58%;}
+.guide-slot-shoes .guide-item{max-width:61%;max-height:48%;}
+.guide-item.dragging{opacity:.45;}
+.guide-controls{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  margin-top:4px;min-height:26px;z-index:20;
+}
+.guide-arrow{
+  width:28px;height:28px;padding:0;border:1px solid #efd5e2;border-radius:50%;
+  background:#fff;display:flex;align-items:center;justify-content:center;
+  cursor:pointer;box-shadow:0 1px 4px rgba(180,110,145,.06);
+}
+.guide-arrow:hover{border-color:#efa2c0;transform:scale(1.04);}
+.guide-arrow img{width:100%;height:100%;object-fit:contain;image-rendering:auto;pointer-events:none;}
+.guide-count{min-width:28px;text-align:center;color:#6d5969;font-size:13px;line-height:1;}
+.guide-mouse-hint{
+  position:absolute;z-index:80;width:28px;height:28px;object-fit:contain;image-rendering:pixelated;
+  pointer-events:none;opacity:0;transform:translate(5px,5px);
+  transition:opacity .08s ease;
+}
+.guide-mouse-hint.show{opacity:1;}
+
+/* Encaixe do manequim calculado em script.js (MANNEQUIN_CONTENT_FIT). */
+
+/* Vestido não faz parte da área demonstrativa do manequim. */
+.guide-dress{display:none!important;}
+
+/* Rodapé no ritmo da referência: texto, chips e botões com respiro. */
+.booth-caption{bottom:31.5%;font-size:20px;line-height:1.1;}
+.worn-chips{
+  left:18px;right:18px;bottom:16.2%;min-height:40px;
+  display:flex;flex-wrap:wrap;justify-content:center;align-content:flex-end;
+  gap:7px 8px;overflow:visible;
+}
+.chip{padding:6px 9px 6px 11px;font-size:14px;gap:6px;}
+.chip img{width:23px;height:23px;}
+.booth-actions{
+  left:0;right:0;bottom:0;height:15.5%;padding:12px 24px 10px;
+  display:flex;justify-content:center;align-items:center;gap:20px;
+  background:#e8d9ea;z-index:25;
+}
+.ghost-btn{
+  min-width:220px;width:auto;height:58px;padding:0 28px;
+  border:1.5px solid rgba(236,195,214,.95);border-radius:30px;
+  background:#fff;color:#3e3441;font-size:18px;
+  box-shadow:0 2px 7px rgba(150,95,125,.08);
+}
+.ghost-btn.solid{background:#f39f91;color:#fff;border-color:#f0b0aa;}
+.trash{width:58px;height:58px;flex:0 0 58px;border:1.5px solid rgba(236,195,214,.95);}
+
+/* Catálogo: cards menores e bordas regulares, sem sobreposição. */
+.tabs{height:64px;gap:10px;margin:0 0 10px;}
+.tab{border:1.5px solid #ead6e2;border-radius:14px;padding:0 8px;}
+.grid{gap:9px;max-height:calc(100vh - 650px);grid-template-columns:repeat(3,1fr);}
+.item-card{height:132px;border:1.5px solid #ead6e2;border-radius:14px;padding:7px;}
+.item-card.selected{border:1.5px solid #f09fbe;}
+
+/* O cursor pixelado só aparece sobre as quatro peças da coluna do manequim. */
+.guide-slot{cursor:default;}
+.guide-item:hover{filter:drop-shadow(0 0 1px #fff) drop-shadow(1px 0 0 #fff) drop-shadow(-1px 0 0 #fff) drop-shadow(0 1px 0 #fff) drop-shadow(0 -1px 0 #fff) drop-shadow(0 3px 3px rgba(112,76,104,.15));}
+.doll-acc,.acc-img.positionable{cursor:grab;}
+.doll-acc:active,.acc-img.positionable:active{cursor:grabbing;}
+
+@media(max-width:1200px){
+  .guide-stage{grid-template-columns:1fr 1.1fr 1fr;}
+  .guide-item{max-width:58%;}
+  .guide-slot-hat .guide-item{max-width:52%;}
+  .guide-slot-bow .guide-item{max-width:45%;}
+  .guide-slot-bag .guide-item{max-width:46%;}
+  .guide-slot-shoes .guide-item{max-width:56%;}
+  .ghost-btn{min-width:195px;padding:0 22px;}
+  .booth-actions{gap:14px;padding-left:16px;padding-right:16px;}
+}
+
+
+/* ===== Ajuste final solicitado: acessórios maiores no manequim + ícones nas abas ===== */
+
+.tabs .tab{gap:8px;}
+.tabs .tab-icon{
+  width:40px;height:40px;flex:0 0 40px;
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;
+}
+.tabs .tab-icon img{
+  width:38px;height:38px;max-width:100%;max-height:100%;
+  object-fit:contain;image-rendering:pixelated;display:block;
+}@media(max-width:1200px){
+  .guide-stage{grid-template-columns:1fr 1.1fr 1fr;}
+/*
+   As imagens das roupas/acessórios possuem pixels de contorno transparentes
+   nas extremidades. Nenhum contêiner da área do gatinho deve recortá-los.
+*/
+.booth-inner,
+.cat-area,
+.cat-stage{
+  overflow:visible !important;
+}
+
+.cat-stage{
+  isolation:isolate;
+}
+
+.acc-img{
+  overflow:visible !important;
+  object-fit:contain;
+  object-position:center;
+  max-width:none;
+  max-height:none;
+  backface-visibility:visible;
+  -webkit-backface-visibility:visible;
+}
+
+/* Mantém uma margem visual para o contorno dos sprites, sem alterar o desenho. */
+.acc-img:not(.manual-position){
+  filter:drop-shadow(0 0 0 rgba(255,255,255,0));
+}
+
+/* Peças reposicionadas manualmente também ficam livres para ultrapassar
+   ligeiramente o limite geométrico do palco sem cortar o contorno. */
+.acc-img.manual-position{
+  overflow:visible !important;
+  max-width:none;
+  max-height:none;
+}
+
+/* Evita que a borda da área de fundo corte somente o sprite do gatinho. */
+.booth-inner::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  border-radius:inherit;
+  z-index:50;
+}
+
+/* ===== Ajuste final de encaixe das roupas: tamanho reduzido para acompanhar o corpo ===== */
+/*
+   Os tamanhos das roupas são calculados por script.js (encaixe por conteúdo);
+   nada é fixado aqui para não conflitar com o cálculo.
+*/
+.doll-acc-dress,.doll-acc-dress-extra,
+.doll-acc-blouse,
+.doll-acc-skirt{
+  height:auto;
+}
+
+
+
+
+/* ===== Sistema de camadas do gatinho ===== */
+.acc-img[data-layer="behind"]{
+  opacity:.98;
+}
+.chip button[aria-label*="camada"],
+.chip button[title*="Trazer"],
+.chip button[title*="Enviar"]{
+  font-size:16px;
+  line-height:1;
+  font-weight:700;
+}
+
+/* ===== Borda pastel ao arrastar roupas do manequim para o gatinho ===== */
+/*
+   Enquanto uma peça é arrastada sobre o palco do gatinho, um contorno
+   rosa pastel acompanha a silhueta do corpo (via drop-shadow empilhado,
+   que segue o canal alfa do PNG), marcando visualmente a fronteira entre
+   o corpo do gato e a roupa que está prestes a ser solta.
+*/
+#dropzone.drop-hover #cat-base{
+  filter:
+    drop-shadow(2.5px 0 0 #ffc9de)
+    drop-shadow(-2.5px 0 0 #ffc9de)
+    drop-shadow(0 2.5px 0 #ffc9de)
+    drop-shadow(0 -2.5px 0 #ffc9de)
+    drop-shadow(1.8px 1.8px 0 #ffc9de)
+    drop-shadow(-1.8px -1.8px 0 #ffc9de)
+    drop-shadow(0 0 10px rgba(255,201,222,.65));
+}
+
+/* Halo suave por trás do gato, reforçando a área de soltar a peça. */
+#dropzone.drop-hover::before{
+  content:"";
+  position:absolute;
+  left:50%;top:50%;
+  width:88%;height:88%;
+  transform:translate(-50%,-50%);
+  border-radius:50%;
+  background:radial-gradient(circle,
+    rgba(255,201,222,.38) 0%,
+    rgba(255,201,222,.16) 45%,
+    rgba(255,201,222,0) 72%);
+  pointer-events:none;
+  z-index:5;
+}
